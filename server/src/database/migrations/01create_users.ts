@@ -14,7 +14,11 @@ export async function up(knex: Knex) {
     table
       .timestamp('updated_at')
       .notNullable()
-      .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
+      .defaultTo(
+        process.env.NODE_ENV === 'test'
+          ? knex.fn.now()
+          : knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+      )
   })
 }
 

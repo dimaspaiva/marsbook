@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules .",
-    "test": "jest"
+    "test": "jest",
+    "pretest": "NODE_ENV=test knex --knexfile knexfile.ts migrate:latest",
+    "posttest": "NODE_ENV=test knex --knexfile knexfile.ts migrate:rollback"
   },
   "dependencies": {
     "@types/cors": "^2.8.6",
@@ -19,6 +21,7 @@
     "@types/express": "^4.17.6",
     "jest": "^26.0.1",
     "sqlite3": "^4.2.0",
+    "ts-jest": "^26.1.0",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.5"
