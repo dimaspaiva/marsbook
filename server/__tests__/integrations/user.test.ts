@@ -3,7 +3,7 @@ import request from 'supertest'
 import knex from '../../src/database/connection'
 import app from '../../src/app'
 
-describe('startup', () => {
+describe('User tests', () => {
   beforeEach(async () => {
     await knex('users').del()
   })
