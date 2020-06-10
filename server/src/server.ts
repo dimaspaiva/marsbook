@@ -1,19 +1,14 @@
 import express from 'express'
-import knex from './database/connection'
+import cors from 'cors'
+
+import routes from './routes'
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
-app.get('/', (req, res) => {
-  return res.json({ message: 'Hello world!' })
-})
-
-app.post('/users', async (req, res) => {
-  const idList = await knex('users').insert(req.body)
-
-  return res.json({ idList })
-})
+app.use(routes)
 
 app.listen(4040, () => {
   console.log('[SRV] up...')
