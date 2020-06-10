@@ -1,8 +1,24 @@
-describe('startup', () => {
-  it('should test 1 + 1', () => {
-    const a = 1
-    const b = 1
+import request from 'supertest'
 
-    expect(a + b).toBe(2)
+import knex from '../../src/database/connection'
+import app from '../../src/app'
+
+describe('startup', () => {
+  beforeEach(async () => {
+    await knex('users').del()
+  })
+
+  afterAll(async () => {
+    await knex.destroy()
+  })
+
+  it('should create an user', async () => {
+    const response = await request(app).post('/users').send({
+      name: 'Dimaas',
+      email: 'dimaspaiva@gmail.com',
+      password: '123456',
+    })
+
+    expect(response.status).toBe(200)
   })
 })

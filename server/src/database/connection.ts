@@ -1,4 +1,5 @@
 import knex from 'knex'
+import path from 'path'
 import dotenv from 'dotenv'
 
 dotenv.config({
@@ -11,7 +12,16 @@ export default knex({
     user: process.env.USER,
     password: process.env.PASS,
     database: process.env.DATABASE,
-    filename: process.env.FILENAME,
+    filename: process.env.NODE_ENV
+      ? path.resolve(
+          __dirname,
+          '..',
+          '..',
+          '__tests__',
+          'database',
+          'test.sqlite'
+        )
+      : '',
   },
   useNullAsDefault: process.env.NODE_ENV === 'test',
 })
