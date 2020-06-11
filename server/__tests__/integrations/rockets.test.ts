@@ -10,13 +10,16 @@ describe('Rockets tests', () => {
   }
 
   beforeAll(async () => {
-    await knex('companies').del()
-    const idList = await knex('companies').insert({ name: company.name })
+    const idList = await knex('companies').insert({
+      name: company.name,
+    })
+
     company.id = idList[0]
   })
 
   beforeEach(async () => {
     await knex('rockets').del()
+    await knex('companies').del()
   })
 
   afterAll(async () => {
@@ -120,5 +123,34 @@ describe('Rockets tests', () => {
     })
 
     expect(response.status).toBe(400)
+  })
+
+  it('should return a especific rocket', async () => {
+    const rocket = await knex('rockets').insert({
+      model: 'Time traveller',
+      seats: 30,
+      price: 12000,
+      launch: '2020/11/26 08:30:00',
+      company: company.id,
+    })
+
+    const response = await request(app).get(`/rockest/${rocket[0]}`)
+
+    expect(response.status).toBe(200)
+  })
+
+  it('should return a rocket and the owner', async () => {
+    const rocket = await knex('rockets').insert({
+      model: 'Time traveller',
+      seats: 30,
+      price: 12000,
+      launch: '2020/11/26 08:30:00',
+      company: company.id,
+    })
+
+    const response = await request(app).get(`/rockest/${rocket[0]}`)
+
+    expect(response.status).toBe(200)
+    expect(response.body.rocket.company_name).toMatch(company.name)
   })
 })

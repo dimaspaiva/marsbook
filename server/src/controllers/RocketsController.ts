@@ -32,6 +32,17 @@ class Rocket {
 
     return res.json({ rocketId: idList[0] })
   }
+
+  async index(req: Request, res: Response) {
+    const id = req.params.id
+
+    const rocket = await knex('rockets')
+      .join('companies', 'companies.id', '=', 'rockets.company')
+      .where('rockets.id', id)
+      .select('rockets.*', 'companies.name as company_name')
+
+    return res.json({ rocket: rocket[0] })
+  }
 }
 
 export default new Rocket()
