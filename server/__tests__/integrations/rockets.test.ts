@@ -19,7 +19,6 @@ describe('Rockets tests', () => {
 
   beforeEach(async () => {
     await knex('rockets').del()
-    await knex('companies').del()
   })
 
   afterAll(async () => {
