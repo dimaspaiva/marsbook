@@ -109,7 +109,6 @@ class Rocket {
     )
 
     const times = Array.from(cleanTimes)
-    console.log(times)
 
     return res.json({ times })
   }
