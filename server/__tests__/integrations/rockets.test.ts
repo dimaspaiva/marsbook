@@ -10,6 +10,7 @@ describe('Rockets tests', () => {
   }
 
   beforeAll(async () => {
+    await knex('companies').del()
     const idList = await knex('companies').insert({
       name: company.name,
     })
