@@ -9,15 +9,22 @@ class User {
         .json({ message: 'One or more creating data is missing' })
     }
 
-    const user = await knex('users').select('*').where('email', req.body.email)
+    const user = await knex('users')
+      .select('*')
+      .where('email', req.body.email)
 
     if (user[0]) {
       return res.status(400).json({ message: 'E-mail is already in use' })
     }
 
-    await knex('users').insert(req.body)
+    const idList = await knex('users').insert(req.body)
+    const newUser = await knex('users').select('*').where('id', idList[0])
 
-    return res.json({ message: 'User created success' })
+    if (newUser[0].role === 2) {
+      return res.json({ message: 'New admin user', admin: true })
+    }
+
+    return res.json({ message: 'User created success', admin: false })
   }
 }
 

@@ -22,6 +22,18 @@ describe('User tests', () => {
     expect(response.status).toBe(200)
   })
 
+  it('should create an admin user', async () => {
+    const response = await request(app).post('/users').send({
+      name: 'Dimas',
+      email: 'dimaspaiva@gmail.com',
+      password: '123456',
+      role: 2,
+    })
+
+    expect(response.status).toBe(200)
+    expect(response.body.admin).toBe(true)
+  })
+
   it('should not create an user with already registered email', async () => {
     await knex('users').insert({
       name: 'Dimas Jose',

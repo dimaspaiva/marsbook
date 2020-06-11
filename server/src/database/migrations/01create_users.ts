@@ -9,6 +9,7 @@ export async function up(knex: Knex) {
 
     table.string('name').notNullable()
     table.float('balance').notNullable().defaultTo(15000)
+    table.integer('role').notNullable().defaultTo(1)
 
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now())
     table
