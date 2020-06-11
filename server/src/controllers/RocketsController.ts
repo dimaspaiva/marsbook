@@ -43,6 +43,76 @@ class Rocket {
 
     return res.json({ rocket: rocket[0] })
   }
+
+  async show(req: Request, res: Response) {
+    const { date, time } = req.query
+
+    if (time) {
+      const rockets = await knex('rockets')
+        .select('*')
+        .where('launch', '=', `${date} ${time}`)
+
+      return res.json({ rockets })
+    }
+
+    if (date) {
+      const rockets = await knex('rockets')
+        .select('*')
+        .where(
+          'launch',
+          '>=',
+          `${date} 00:00:00`,
+          'and',
+          'launch',
+          '<=',
+          `${date} 23:59:59`
+        )
+
+      return res.json({ rockets })
+    }
+    const rockets = await knex('rockets')
+
+    return res.json({ rockets })
+  }
+
+  async showDates(req: Request, res: Response) {
+    const datesList = await knex('rockets')
+      .select('launch')
+      .distinct('launch')
+
+    const cleanDates = new Set(
+      datesList.map((date) => date.launch.split(' ')[0])
+    )
+
+    const dates = Array.from(cleanDates)
+
+    return res.json({ dates })
+  }
+
+  async showTimes(req: Request, res: Response) {
+    const { date } = req.query
+    const timesList = await knex('rockets')
+      .select('launch')
+      .distinct('launch')
+      .where(
+        'launch',
+        '>=',
+        `${date} 00:00:00`,
+        'AND',
+        'launch',
+        '<=',
+        `${date} 23:59:59`
+      )
+
+    const cleanTimes = new Set(
+      timesList.map((date) => date.launch.split(' ')[1])
+    )
+
+    const times = Array.from(cleanTimes)
+    console.log(times)
+
+    return res.json({ times })
+  }
 }
 
 export default new Rocket()

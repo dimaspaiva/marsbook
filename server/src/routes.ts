@@ -16,6 +16,9 @@ routes.get('/companies', Companies.listAll)
 routes.get('/companies/:id', Companies.index)
 routes.post('/companies', Companies.create)
 
-routes.get('/rockest/:id', Rocket.index)
+routes.get('/rockets', Rocket.show)
+routes.get('/rockets/dates', Rocket.showDates)
+routes.get('/rockets/times', Rocket.showTimes)
+routes.get('/rockets/:id', Rocket.index)
 routes.post('/rockets', Rocket.create)
 export default routes
