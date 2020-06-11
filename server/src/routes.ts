@@ -7,6 +7,7 @@ import Rocket from './controllers/RocketsController'
 const routes = Router()
 
 routes.post('/users', User.create)
+routes.post('/users/login', User.login)
 
 routes.get('/companies', Companies.listAll)
 routes.get('/companies/:id', Companies.index)

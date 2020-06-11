@@ -76,4 +76,49 @@ describe('User tests', () => {
 
     expect(response.status).toBe(400)
   })
+
+  it('should recognize an user', async () => {
+    await request(app).post('/users').send({
+      name: 'Dimas',
+      email: 'dimasalpaiva@gmail.com',
+      password: '123456',
+    })
+
+    const response = await request(app).post('/users/login').send({
+      email: 'dimasalpaiva@gmail.com',
+      password: '123456',
+    })
+
+    expect(response.status).toBe(200)
+  })
+
+  it('should not recognize an invalid email', async () => {
+    await request(app).post('/users').send({
+      name: 'Dimas',
+      email: 'dimasalpaiva@gmail.com',
+      password: '123456',
+    })
+
+    const response = await request(app).post('/users/login').send({
+      email: 'dimas@gmail.com',
+      password: '123456',
+    })
+
+    expect(response.status).toBe(400)
+  })
+
+  it('should not recognize an user with wrong password', async () => {
+    await request(app).post('/users').send({
+      name: 'Dimas',
+      email: 'dimasalpaiva@gmail.com',
+      password: '123456',
+    })
+
+    const response = await request(app).post('/users/login').send({
+      email: 'dimasalpaiva@gmail.com',
+      password: '654321',
+    })
+
+    expect(response.status).toBe(400)
+  })
 })

@@ -4,7 +4,7 @@ import knex from '../database/connection'
 
 class Rocket {
   async create(req: Request, res: Response) {
-    const { model, seats, launch, company, price } = req.body
+    const { model, seats, price, launch, company } = req.body
 
     if (!model || !seats || !launch || !company || !price) {
       return res

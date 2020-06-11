@@ -26,6 +26,26 @@ class User {
 
     return res.json({ message: 'User created success', admin: false })
   }
+
+  async login(req: Request, res: Response) {
+    const { email, password } = req.body
+
+    const user = await knex('users').select('*').where('email', email)
+
+    if (!user[0]) {
+      return res.status(400).json({
+        message: 'User not found',
+      })
+    }
+
+    if (user[0].password !== password) {
+      return res.status(400).json({
+        message: 'Wrong password',
+      })
+    }
+
+    return res.json({ message: 'Login success' })
+  }
 }
 
 export default new User()
