@@ -27,7 +27,11 @@ describe('Companies tests', () => {
   })
 
   it('should not create the same companie twice', async () => {
-    await knex('companies').insert({
+    // await knex('companies').insert({
+    //   name: 'Space X',
+    // })
+
+    await request(app).post('/companies').send({
       name: 'Space X',
     })
 
