@@ -6,6 +6,7 @@ export async function up(knex: Knex) {
 
     table.string('name').notNullable().unique()
     table.json('rating').notNullable().defaultTo(0)
+    table.json('votes').notNullable().defaultTo(0)
 
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now())
     table

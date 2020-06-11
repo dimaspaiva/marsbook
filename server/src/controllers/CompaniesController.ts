@@ -49,6 +49,36 @@ class Companies {
 
     return res.json({ company: company[0] })
   }
+
+  async updateRating(req: Request, res: Response) {
+    const { rate, id } = req.body
+
+    if (!id || typeof rate === 'undefined') {
+      return res.status(400).json({
+        message: 'Missing date to rating',
+      })
+    }
+
+    const company = await knex('companies')
+      .select('rating', 'votes')
+      .where('id', id)
+
+    if (!company[0]) {
+      return res.status(400).json({
+        message: 'Company not exists',
+      })
+    }
+
+    const newVotes = company[0].votes + 1
+    const newRating = (company[0].rating + rate) / (company[0].votes + 1)
+
+    await knex('companies').update({
+      rating: newRating,
+      votes: newVotes,
+    })
+
+    return res.json({ message: 'Updates success', rating: newRating })
+  }
 }
 
 export default new Companies()

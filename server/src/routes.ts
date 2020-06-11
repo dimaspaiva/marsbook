@@ -15,6 +15,7 @@ routes.post('/userflight', UserFlight.create)
 routes.get('/companies', Companies.listAll)
 routes.get('/companies/:id', Companies.index)
 routes.post('/companies', Companies.create)
+routes.post('/companies/rating', Companies.updateRating)
 
 routes.get('/rockets', Rocket.show)
 routes.get('/rockets/dates', Rocket.showDates)
