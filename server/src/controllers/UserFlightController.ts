@@ -33,7 +33,7 @@ class UserFlight {
       })
     }
 
-    knex('user-flights').insert({
+    knex('user_flights').insert({
       id_rocket,
       id_user,
     })

@@ -1,7 +1,7 @@
 import Knex from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.createTable('user-flights', (table) => {
+  await knex.schema.createTable('user_flights', (table) => {
     table.increments('id').primary()
 
     table.integer('id_user').notNullable()
@@ -23,5 +23,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.dropTable('user-flights')
+  await knex.schema.dropTable('user_flights')
 }

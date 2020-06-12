@@ -44,7 +44,24 @@ class User {
       })
     }
 
-    return res.json({ message: 'Login success' })
+    const flight = await knex('user_flights')
+      .select('id', 'id_rocket')
+      .where('id_user', user[0].id)
+
+    if (flight[0]) {
+      const rocket = await knex('rockets')
+        .select('*')
+        .where('id', flight[0].id_rocket)
+
+      return res.json({
+        message: 'Login success',
+        flight: rocket[0],
+      })
+    }
+
+    return res.json({
+      message: 'Login success',
+    })
   }
 }
 
