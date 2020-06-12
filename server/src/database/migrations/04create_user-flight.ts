@@ -19,6 +19,8 @@ export async function up(knex: Knex) {
           ? knex.fn.now()
           : knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       )
+
+    table.timestamp('deleted_at')
   })
 }
 

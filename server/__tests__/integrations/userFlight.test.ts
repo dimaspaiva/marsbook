@@ -130,4 +130,39 @@ describe('User flight tests', () => {
 
     expect(response.status).toBe(400)
   })
+
+  it('should cancel a travel reserve', async () => {
+    const idListCompany = await knex('companies').insert({
+      name: 'Space X Buy',
+    })
+
+    const idListRocket = await knex('rockets').insert({
+      model: 'Time traveller',
+      seats: 30,
+      price: 12000,
+      launch: '2020/11/26 08:30:00',
+      company: idListCompany[0],
+    })
+
+    const idListUser = await knex('users').insert({
+      name: 'Dimas',
+      email: 'dimasalpaiva@gmail.com',
+      password: '123456',
+    })
+
+    const idBuy = await knex('user_flights').insert({
+      id_rocket: idListRocket[0],
+      id_user: idListUser[0],
+    })
+
+    const response = await request(app).delete(`/userflight/${idBuy[0]}`)
+
+    expect(response.status).toBe(200)
+  })
+
+  it('should not cancel when order dont exists', async () => {
+    const response = await request(app).delete('/userflight/-1')
+
+    expect(response.status).toBe(400)
+  })
 })

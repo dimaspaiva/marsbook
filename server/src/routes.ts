@@ -11,6 +11,7 @@ routes.post('/users', User.create)
 routes.post('/users/login', User.login)
 
 routes.post('/userflight', UserFlight.create)
+routes.delete('/userflight/:id', UserFlight.remove)
 
 routes.get('/companies', Companies.listAll)
 routes.get('/companies/:id', Companies.index)
@@ -22,4 +23,5 @@ routes.get('/rockets/dates', Rocket.showDates)
 routes.get('/rockets/times', Rocket.showTimes)
 routes.get('/rockets/:id', Rocket.index)
 routes.post('/rockets', Rocket.create)
+
 export default routes

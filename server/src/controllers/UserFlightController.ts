@@ -40,6 +40,26 @@ class UserFlight {
 
     return res.json({ message: 'Buy success' })
   }
+
+  async remove(req: Request, res: Response) {
+    const { id } = req.params
+
+    const order = await knex('user_flights').select('id').where('id', id)
+
+    if (!order[0]) {
+      return res.status(400).json({
+        message: 'Order dont exists',
+      })
+    }
+
+    await knex('user_flights')
+      .update('deleted_at', knex.fn.now())
+      .where('id', id)
+
+    return res.json({
+      message: 'Flight success on cancel',
+    })
+  }
 }
 
 export default new UserFlight()
