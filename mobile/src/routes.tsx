@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Rockets from './pages/Rockets'
+import Purchase from './pages/Purchase'
 
 const AppStack = createStackNavigator()
 
@@ -17,6 +18,7 @@ const Routes = () => {
         <AppStack.Screen name="Login" component={Login} />
         <AppStack.Screen name="Home" component={Home} />
         <AppStack.Screen name="Rockets" component={Rockets} />
+        <AppStack.Screen name="Purchase" component={Purchase} />
       </AppStack.Navigator>
     </NavigationContainer>
   )
