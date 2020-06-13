@@ -7,20 +7,25 @@ import {
   ScrollView,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
+import { useNavigation } from '@react-navigation/native'
 
 import MainButton from '../../components/MainButton'
 
 import styles from './styles'
 import global from '../styles-global'
+import Return from '../../components/ReturnButton'
 
 const Rockets = () => {
+  const navigation = useNavigation()
+
+  const handleMoveFinalize = () => {
+    navigation.navigate('Purchase')
+  }
+
   return (
     <SafeAreaView style={global.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.returnContainer}>
-          <Icon name="chevrons-left" color="#FF6666" size={30} />
-          <Text style={styles.returnText}>Return</Text>
-        </TouchableOpacity>
+        <Return />
 
         <TouchableOpacity>
           <Text style={styles.walletText}>Wallet</Text>
@@ -263,7 +268,7 @@ const Rockets = () => {
         darkColor="#7C48E4"
         text="Purchase your tickets"
         icon="dollar-sign"
-        action={() => {}}
+        action={handleMoveFinalize}
       />
     </SafeAreaView>
   )

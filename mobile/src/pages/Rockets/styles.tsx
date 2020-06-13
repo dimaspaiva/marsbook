@@ -9,18 +9,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  returnContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  returnText: {
-    fontSize: 15,
-    fontFamily: 'Evogria',
-    color: '#FF6666',
-  },
-
   walletText: {
     fontSize: 15,
     fontFamily: 'Evogria',
