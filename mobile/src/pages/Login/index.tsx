@@ -9,12 +9,11 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native'
-import { RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import Icon from 'react-native-vector-icons/Feather'
 
 import styles from './styles'
 import global from '../styles-global'
+import MainButton from '../../components/MainButton'
 
 const Login = () => {
   const navigation = useNavigation()
@@ -49,14 +48,21 @@ const Login = () => {
             style={isKeyboard ? styles.logoKeyboard : styles.logo}
             source={require('../../img/rocket-logo.png')}
           />
-          <Text style={isKeyboard ? styles.sloganKeyboard : styles.slogan}>
+          <Text style={isKeyboard ? styles.sloganKeyboard : global.pageTitle}>
             Let's explore mars!
           </Text>
         </View>
 
-        <View>
-          <TextInput style={styles.input} placeholder="E-mail" />
-          <TextInput style={styles.input} placeholder="Password" />
+        <View style={{ marginBottom: 33 }}>
+          <TextInput
+            style={[global.input, { marginBottom: 30 }]}
+            placeholder="E-mail"
+          />
+
+          <TextInput
+            style={[global.input, { marginBottom: 9 }]}
+            placeholder="Password"
+          />
 
           <View style={styles.linkContainer}>
             <TouchableOpacity>
@@ -66,15 +72,15 @@ const Login = () => {
               <Text style={global.link}>Register</Text>
             </TouchableOpacity>
           </View>
-
-          <RectButton style={styles.button} onPress={() => handleLogin()}>
-            <Text style={styles.buttonTitle}>Login</Text>
-
-            <View style={styles.buttonIconContainer}>
-              <Icon name="chevrons-right" color="#EAEAEA" size={21} />
-            </View>
-          </RectButton>
         </View>
+
+        <MainButton
+          color="#9966FF"
+          darkColor="#7C48E4"
+          text="Login"
+          icon="chevrons-right"
+          action={handleLogin}
+        />
       </SafeAreaView>
     </KeyboardAvoidingView>
   )
