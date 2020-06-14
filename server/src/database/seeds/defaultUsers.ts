@@ -12,7 +12,7 @@ export async function seed(knex: Knex) {
       id: 2,
       email: 'cleytu@gmail.com',
       password: '234567',
-      name: 'Clytu Jr.',
+      name: 'Cleytu Jr.',
     },
     {
       id: 3,
