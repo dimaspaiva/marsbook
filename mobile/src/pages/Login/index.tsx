@@ -8,17 +8,21 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
+  Alert,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
+import MainButton from '../../components/MainButton'
+import api from '../../services/api'
+
 import styles from './styles'
 import global from '../styles-global'
-import MainButton from '../../components/MainButton'
 
 const Login = () => {
   const navigation = useNavigation()
 
   const [isKeyboard, setIsKeyboard] = useState(false)
+  const [login, setLogin] = useState({ email: '', password: '' })
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', handleKeyboardShow)
@@ -33,8 +37,31 @@ const Login = () => {
     setIsKeyboard(false)
   }
 
-  const handleLogin = () => {
-    navigation.navigate('Home')
+  const handleLogin = async () => {
+    const { email, password } = login
+
+    try {
+      const response = await api.post('users/login', {
+        email,
+        password,
+      })
+
+      if (response.status === 200) {
+        setLogin({ email: '', password: '' })
+        return navigation.navigate('Home')
+      }
+    } catch (error) {
+      setLogin({ email: login.email, password: '' })
+      Alert.alert('Login failed', 'Wrong login infos, email or password')
+    }
+  }
+
+  const handleEmail = (email: string) => {
+    setLogin({ email, password: login.password })
+  }
+
+  const handlePassword = (password: string) => {
+    setLogin({ password, email: login.email })
   }
 
   return (
@@ -56,11 +83,21 @@ const Login = () => {
         <View style={{ marginBottom: 33 }}>
           <TextInput
             style={[global.input, { marginBottom: 30 }]}
+            autoCorrect={false}
+            textContentType="emailAddress"
+            value={login.email}
+            autoCapitalize="none"
+            onChangeText={(text) => handleEmail(text)}
             placeholder="E-mail"
           />
 
           <TextInput
             style={[global.input, { marginBottom: 9 }]}
+            textContentType="password"
+            secureTextEntry
+            value={login.password}
+            onChangeText={(text) => handlePassword(text)}
+            key="teste"
             placeholder="Password"
           />
 
