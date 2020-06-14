@@ -50,7 +50,7 @@ class Rocket {
     if (time) {
       const rockets = await knex('rockets')
         .select('*')
-        .where('launch', '=', `${date} ${time}`)
+        .where('launch', '=', `${date}T${time}`)
 
       return res.json({ rockets })
     }
@@ -61,11 +61,11 @@ class Rocket {
         .where(
           'launch',
           '>=',
-          `${date} 00:00:00`,
+          `${date}T00:00:00`,
           'and',
           'launch',
           '<=',
-          `${date} 23:59:59`
+          `${date}T23:59:59`
         )
 
       return res.json({ rockets })
@@ -79,8 +79,6 @@ class Rocket {
     const datesList = await knex('rockets')
       .select('launch')
       .distinct('launch')
-
-    console.log(datesList)
 
     const cleanDates = new Set(
       datesList.map((date) => date.launch.split('T')[0])
@@ -99,15 +97,15 @@ class Rocket {
       .where(
         'launch',
         '>=',
-        `${date} 00:00:00`,
+        `${date}T00:00:00`,
         'AND',
         'launch',
         '<=',
-        `${date} 23:59:59`
+        `${date}T23:59:59`
       )
 
     const cleanTimes = new Set(
-      timesList.map((date) => date.launch.split(' ')[1])
+      timesList.map((date) => date.launch.split('T')[1])
     )
 
     const times = Array.from(cleanTimes)
