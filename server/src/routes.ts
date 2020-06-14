@@ -7,6 +7,16 @@ import UserFlight from './controllers/UserFlightController'
 
 const routes = Router()
 
+if (process.env.NODE_ENV === 'dev') {
+  routes.use((req, res, next) => {
+    console.log('[RTR] new request...')
+    console.log(`\t[${req.method}] ${req.path} | from: ${req.ip}`)
+    console.log(req.body)
+
+    next()
+  })
+}
+
 routes.post('/users', User.create)
 routes.post('/users/login', User.login)
 
