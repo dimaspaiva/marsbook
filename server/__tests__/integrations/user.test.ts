@@ -158,4 +158,21 @@ describe('User tests', () => {
     expect(response.status).toBe(200)
     expect(response.body.flight).toHaveProperty('launch')
   })
+
+  it('should login as admin user', async () => {
+    await knex('users').insert({
+      name: 'Elon Musk',
+      email: 'elon@gmail.com',
+      password: '987654',
+      role: 2,
+    })
+
+    const response = await request(app).post('/users/login').send({
+      email: 'elon@gmail.com',
+      password: '987654',
+    })
+
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty('role')
+  })
 })
