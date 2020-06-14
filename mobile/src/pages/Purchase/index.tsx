@@ -11,6 +11,10 @@ import Return from '../../components/ReturnButton'
 const Purchase = () => {
   const navigation = useNavigation()
 
+  const handleFinalize = () => {
+    navigation.navigate('AwaitFlight')
+  }
+
   return (
     <SafeAreaView style={global.container}>
       <ImageBackground
@@ -49,7 +53,7 @@ const Purchase = () => {
           darkColor="#7C48E4"
           text="Purchase"
           icon="check-circle"
-          action={() => {}}
+          action={handleFinalize}
         />
       </ImageBackground>
     </SafeAreaView>
