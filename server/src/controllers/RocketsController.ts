@@ -80,8 +80,10 @@ class Rocket {
       .select('launch')
       .distinct('launch')
 
+    console.log(datesList)
+
     const cleanDates = new Set(
-      datesList.map((date) => date.launch.split(' ')[0])
+      datesList.map((date) => date.launch.split('T')[0])
     )
 
     const dates = Array.from(cleanDates)
