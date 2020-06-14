@@ -31,7 +31,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -42,7 +42,7 @@ describe('Rockets tests', () => {
     const response = await request(app).post('/rockets').send({
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -53,7 +53,7 @@ describe('Rockets tests', () => {
     const response = await request(app).post('/rockets').send({
       model: 'Time traveller',
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -64,7 +64,7 @@ describe('Rockets tests', () => {
     const response = await request(app).post('/rockets').send({
       model: 'Time traveller',
       seats: 30,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -87,7 +87,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
     })
 
     expect(response.status).toBe(400)
@@ -98,7 +98,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -106,7 +106,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -118,7 +118,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: -1,
     })
 
@@ -130,7 +130,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -144,7 +144,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -159,7 +159,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -167,7 +167,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 2',
       seats: 30,
       price: 12000,
-      launch: '2020/11/27 08:30:00',
+      launch: '2020/11/27T08:30:00',
       company: company.id,
     })
 
@@ -182,7 +182,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/26 08:30:00',
+      launch: '2020/11/26T08:30:00',
       company: company.id,
     })
 
@@ -190,7 +190,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 2',
       seats: 30,
       price: 12000,
-      launch: '2020/11/27 08:30:00',
+      launch: '2020/11/27T08:30:00',
       company: company.id,
     })
 
@@ -205,7 +205,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller',
       seats: 30,
       price: 12000,
-      launch: '2020/11/27 09:00:00',
+      launch: '2020/11/27T09:00:00',
       company: company.id,
     })
 
@@ -213,7 +213,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 2',
       seats: 30,
       price: 12000,
-      launch: '2020/11/27 08:30:00',
+      launch: '2020/11/27T08:30:00',
       company: company.id,
     })
 
@@ -230,7 +230,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 1',
       seats: 30,
       price: 12000,
-      launch: '2020/11/27 09:00:00',
+      launch: '2020/11/27T09:00:00',
       company: company.id,
     })
 
@@ -238,7 +238,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 2',
       seats: 30,
       price: 12000,
-      launch: '2020/11/28 09:00:00',
+      launch: '2020/11/28T09:00:00',
       company: company.id,
     })
 
@@ -246,7 +246,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 3',
       seats: 30,
       price: 12000,
-      launch: '2020/11/29 09:00:00',
+      launch: '2020/11/29T09:00:00',
       company: company.id,
     })
 
@@ -254,7 +254,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 4',
       seats: 30,
       price: 12000,
-      launch: '2020/11/29 19:00:00',
+      launch: '2020/11/29T19:00:00',
       company: company.id,
     })
 
@@ -269,7 +269,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 1',
       seats: 30,
       price: 12000,
-      launch: '2020/11/28 07:00:00',
+      launch: '2020/11/28T07:00:00',
       company: company.id,
     })
 
@@ -277,7 +277,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 2',
       seats: 30,
       price: 12000,
-      launch: '2020/11/28 09:00:00',
+      launch: '2020/11/28T09:00:00',
       company: company.id,
     })
 
@@ -285,7 +285,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 3',
       seats: 30,
       price: 12000,
-      launch: '2020/11/28 09:00:00',
+      launch: '2020/11/28T09:00:00',
       company: company.id,
     })
 
@@ -293,7 +293,7 @@ describe('Rockets tests', () => {
       model: 'Time traveller 4',
       seats: 30,
       price: 12000,
-      launch: '2020/11/28 19:00:00',
+      launch: '2020/11/28T19:00:00',
       company: company.id,
     })
 
