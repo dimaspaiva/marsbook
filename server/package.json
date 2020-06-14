@@ -5,6 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules .",
+    "migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "seeds": "knex --knexfile knexfile.ts seed:run",
     "test": "jest --runInBand --bail",
     "pretest": "NODE_ENV=test knex --knexfile knexfile.ts migrate:latest",
     "posttest": "NODE_ENV=test knex --knexfile knexfile.ts migrate:rollback"
