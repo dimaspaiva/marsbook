@@ -7,7 +7,7 @@ export async function seed(knex: Knex) {
       model: 'Time Traveler',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/10 09:00:00',
       company: 1,
     },
     {
@@ -15,7 +15,7 @@ export async function seed(knex: Knex) {
       model: 'Time Booster',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/11 08:00:00',
       company: 1,
     },
     {
@@ -23,7 +23,7 @@ export async function seed(knex: Knex) {
       model: 'New Horizon',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/09 14:00:00',
       company: 2,
     },
     {
@@ -31,7 +31,7 @@ export async function seed(knex: Knex) {
       model: 'Mi Traveler X',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/12 18:00:00',
       company: 3,
     },
     {
@@ -39,7 +39,7 @@ export async function seed(knex: Knex) {
       model: 'Sun Lightyear',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/11 08:30:00',
       company: 4,
     },
     {
@@ -47,7 +47,7 @@ export async function seed(knex: Knex) {
       model: 'Timebreaker',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/10 15:30:00',
       company: 1,
     },
     {
@@ -55,7 +55,7 @@ export async function seed(knex: Knex) {
       model: 'Ray Boom',
       seats: 15,
       price: 15000.0,
-      launch: '2053/02/09 08:00:00',
+      launch: '2053/02/09 12:00:00',
       company: 4,
     },
     {
@@ -65,6 +65,14 @@ export async function seed(knex: Knex) {
       price: 15000.0,
       launch: '2053/02/09 08:00:00',
       company: 4,
+    },
+    {
+      id: 9,
+      model: 'Sonic Boom',
+      seats: 0,
+      price: 15000.0,
+      launch: '2053/02/09 08:00:00',
+      company: 1,
     },
   ])
 }

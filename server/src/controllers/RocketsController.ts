@@ -2,6 +2,10 @@ import { Request, Response } from 'express'
 
 import knex from '../database/connection'
 
+interface Launch {
+  launch: Date
+}
+
 class Rocket {
   async create(req: Request, res: Response) {
     const { model, seats, price, launch, company } = req.body
@@ -49,28 +53,28 @@ class Rocket {
 
     if (time) {
       const rockets = await knex('rockets')
-        .select('*')
-        .where('launch', '=', `${date}T${time}`)
+        .select('id', 'model', 'seats', 'price', 'launch', 'company')
+        .where('launch', '=', `${date} ${time}`)
 
       return res.json({ rockets })
     }
 
     if (date) {
       const rockets = await knex('rockets')
-        .select('*')
-        .where(
-          'launch',
-          '>=',
-          `${date}T00:00:00`,
-          'and',
-          'launch',
-          '<=',
-          `${date}T23:59:59`
-        )
+        .select('id', 'model', 'seats', 'price', 'launch', 'company')
+        .whereBetween('launch', [`${date} 00:00:00`, `${date} 23:59:59`])
 
       return res.json({ rockets })
     }
-    const rockets = await knex('rockets')
+
+    const rockets = await knex('rockets').select(
+      'id',
+      'model',
+      'seats',
+      'price',
+      'launch',
+      'company'
+    )
 
     return res.json({ rockets })
   }
@@ -81,7 +85,9 @@ class Rocket {
       .distinct('launch')
 
     const cleanDates = new Set(
-      datesList.map((date) => date.launch.split('T')[0])
+      datesList.map(
+        (date: Launch) => date.launch.toLocaleDateString().split('T')[0]
+      )
     )
 
     const dates = Array.from(cleanDates)
@@ -91,21 +97,16 @@ class Rocket {
 
   async showTimes(req: Request, res: Response) {
     const { date } = req.query
+
     const timesList = await knex('rockets')
       .select('launch')
       .distinct('launch')
-      .where(
-        'launch',
-        '>=',
-        `${date}T00:00:00`,
-        'AND',
-        'launch',
-        '<=',
-        `${date}T23:59:59`
-      )
+      .whereBetween('launch', [`${date} 00:00:00`, `${date} 23:59:59`])
 
     const cleanTimes = new Set(
-      timesList.map((date) => date.launch.split('T')[1])
+      timesList.map((date: Launch) => {
+        return date.launch.toLocaleTimeString()
+      })
     )
 
     const times = Array.from(cleanTimes)
