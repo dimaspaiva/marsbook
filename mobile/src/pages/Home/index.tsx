@@ -21,22 +21,22 @@ const Home = () => {
 
   return (
     <SafeAreaView style={global.container}>
-      <View style={styles.header}>
-        <View style={styles.headerContainer}>
+      <View style={global.header}>
+        <View style={global.headerContainer}>
           <Image
-            style={styles.headerLogo}
+            style={global.headerLogo}
             source={require('../../img/logo-min.png')}
           />
-          <Text style={styles.headerSlogan}>
+          <Text style={global.headerSlogan}>
             Flying with Comfort and Safety
           </Text>
         </View>
 
         <TouchableOpacity
           onPress={() => handleLogout()}
-          style={styles.logoutContainer}>
+          style={global.logoutContainer}>
           <Icon name="power" color="#FF6666" size={30} />
-          <Text style={styles.logoutTitle}>Logout</Text>
+          <Text style={global.logoutTitle}>Logout</Text>
         </TouchableOpacity>
       </View>
 
