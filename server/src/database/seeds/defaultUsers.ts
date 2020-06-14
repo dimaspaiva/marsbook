@@ -28,13 +28,13 @@ export async function seed(knex: Knex) {
     },
     {
       id: 5,
-      email: 'Jeferson@gmail.com',
+      email: 'jeferson@gmail.com',
       password: '567890',
       name: 'Jeferson',
     },
     {
       id: 6,
-      email: 'Elon@gmail.com',
+      email: 'elon@gmail.com',
       password: '987654',
       name: 'Musk Elon',
       role: 2,
