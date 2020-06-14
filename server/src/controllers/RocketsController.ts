@@ -4,6 +4,7 @@ import knex from '../database/connection'
 
 interface Launch {
   launch: Date
+  company: number
 }
 
 class Rocket {
@@ -99,13 +100,13 @@ class Rocket {
     const { date } = req.query
 
     const timesList = await knex('rockets')
-      .select('launch')
+      .select('launch', 'company')
       .distinct('launch')
       .whereBetween('launch', [`${date} 00:00:00`, `${date} 23:59:59`])
 
     const cleanTimes = new Set(
       timesList.map((date: Launch) => {
-        return date.launch.toLocaleTimeString()
+        return { ...date, launch: date.launch.toLocaleTimeString() }
       })
     )
 
