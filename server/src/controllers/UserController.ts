@@ -44,6 +44,10 @@ class User {
       })
     }
 
+    if (user[0].role === 2) {
+      return res.json({ message: 'Login Succes', role: user[0].role })
+    }
+
     const flight = await knex('user_flights')
       .select('id', 'id_rocket')
       .where('id_user', user[0].id)
