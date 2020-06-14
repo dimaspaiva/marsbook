@@ -4,7 +4,7 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch node_modules .",
+    "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules .",
     "migrate": "knex --knexfile knexfile.ts migrate:latest",
     "seeds": "knex --knexfile knexfile.ts seed:run",
     "test": "jest --runInBand --bail",
