@@ -19,7 +19,7 @@ export async function up(knex: Knex) {
       )
 
     table.integer('company').notNullable()
-    table.foreign('company').references('id').inTable('companies')
+    table.foreign('company').references('companies')
   })
 }
 export async function down(knex: Knex) {

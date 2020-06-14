@@ -5,10 +5,10 @@ export async function up(knex: Knex) {
     table.increments('id').primary()
 
     table.integer('id_user').notNullable()
-    table.foreign('id_user').references('id').inTable('users')
+    table.foreign('id_user').references('users')
 
     table.integer('id_rocket').notNullable()
-    table.foreign('id_rocket').references('id').inTable('rockets')
+    table.foreign('id_rocket').references('rockets')
 
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now())
     table
