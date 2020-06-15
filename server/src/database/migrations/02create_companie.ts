@@ -5,7 +5,7 @@ export async function up(knex: Knex) {
     table.increments('id').primary()
 
     table.string('name').notNullable().unique()
-    table.integer('rating').notNullable().defaultTo(0)
+    table.float('rating').notNullable().defaultTo(0)
     table.integer('votes').notNullable().defaultTo(0)
 
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now())
