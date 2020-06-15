@@ -11,6 +11,7 @@ interface ButtonProps {
   color: string
   darkColor: string
   action: Function
+  active?: boolean
 }
 
 const MainButton: React.FC<ButtonProps> = ({
@@ -19,10 +20,15 @@ const MainButton: React.FC<ButtonProps> = ({
   color,
   darkColor,
   action,
+  active = true,
 }) => {
   return (
     <RectButton
-      style={[{ backgroundColor: color }, styles.container]}
+      style={[
+        { backgroundColor: color, opacity: active ? 1 : 0.6 },
+        styles.container,
+      ]}
+      enabled={active}
       onPress={() => action()}>
       <Text style={styles.title}>{text}</Text>
       <View style={[{ backgroundColor: darkColor }, styles.icon]}>
