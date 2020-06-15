@@ -17,11 +17,23 @@ interface SelectProps {
   placeholder?: string
   items: { label: string; value: any }[]
   onSelect?: Function
+  value?: string
 }
 
-const Select: React.FC<SelectProps> = ({ placeholder, items, onSelect }) => {
+const Select: React.FC<SelectProps> = ({
+  placeholder,
+  items,
+  onSelect,
+  value,
+}) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [placeholderText, setPlaceholderText] = useState('Select an option')
+
+  useEffect(() => {
+    if (value === '') {
+      setPlaceholderText(placeholder || 'Select an option')
+    }
+  }, [value])
 
   useEffect(() => {
     if (placeholder) {
