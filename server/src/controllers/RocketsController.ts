@@ -100,14 +100,12 @@ class Rocket {
     const { date } = req.query
 
     const timesList = await knex('rockets')
-      .select('launch', 'company')
+      .select('launch')
       .distinct('launch')
       .whereBetween('launch', [`${date} 00:00:00`, `${date} 23:59:59`])
 
     const cleanTimes = new Set(
-      timesList.map((date: Launch) => {
-        return { ...date, launch: date.launch.toLocaleTimeString() }
-      })
+      timesList.map((date: Launch) => date.launch.toLocaleTimeString())
     )
 
     const times = Array.from(cleanTimes)
