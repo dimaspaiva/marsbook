@@ -3,8 +3,8 @@ import { Alert } from 'react-native'
 
 interface LoginContextData {
   user: User
-  sigIn({ email, password }: { email: string; password: string }): Promise<any>
-  reset(): Promise<void>
+  sigIn(user: User): Function
+  reset(): Function
 }
 
 interface User {
@@ -30,7 +30,7 @@ export const LoginProvider: React.FC = ({ children }) => {
     Alert.alert('info', JSON.stringify(user))
   }
 
-  async function reset() {
+  function reset() {
     setUser({} as User)
   }
 
