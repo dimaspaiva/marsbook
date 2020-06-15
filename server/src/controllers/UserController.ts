@@ -45,7 +45,14 @@ class User {
     }
 
     if (user[0].role === 2) {
-      return res.json({ message: 'Login Succes', role: user[0].role })
+      return res.json({
+        message: 'Login Succes',
+        user: {
+          id: user[0].id,
+          name: user[0].name,
+          role: user[0].role,
+        },
+      })
     }
 
     const flight = await knex('user_flights')
@@ -59,12 +66,22 @@ class User {
 
       return res.json({
         message: 'Login success',
-        flight: rocket[0],
+        user: {
+          id: user[0].id,
+          name: user[0].name,
+          balance: user[0].balance,
+          flight: rocket[0],
+        },
       })
     }
 
     return res.json({
       message: 'Login success',
+      user: {
+        id: user[0].id,
+        name: user[0].name,
+        balance: user[0].balance,
+      },
     })
   }
 }

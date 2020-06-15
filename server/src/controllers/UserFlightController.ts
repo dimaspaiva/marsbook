@@ -33,10 +33,12 @@ class UserFlight {
       })
     }
 
-    knex('user_flights').insert({
+    await knex('user_flights').insert({
       id_rocket,
       id_user,
     })
+
+    console.log('sucess!')
 
     return res.json({ message: 'Buy success' })
   }
