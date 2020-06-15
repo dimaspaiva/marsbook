@@ -1,15 +1,99 @@
-import React from 'react'
-import { ScrollView, View, SafeAreaView, Text, Image } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import {
+  ScrollView,
+  View,
+  SafeAreaView,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native'
 
+import MainButton from '../../components/MainButton'
+import Select from '../../components/Select'
+
 import styles from './styles'
 import global from '../styles-global'
-import { TouchableOpacity, TextInput } from 'react-native-gesture-handler'
-import MainButton from '../../components/MainButton'
+import api from '../../services/api'
+
+interface Times {
+  times: {
+    launch: string
+    company: number
+  }
+}
 
 const Home = () => {
   const navigation = useNavigation()
+  const [travelDate, setTravelDate] = useState('')
+  const [travelTime, setTravelTime] = useState('')
+
+  const [timeList, setTimeList] = useState<
+    {
+      label: string
+      value: string
+      company: number
+    }[]
+  >([])
+  const [dateList, setDateList] = useState<{ label: string; value: string }[]>(
+    [],
+  )
+
+  useEffect(() => {
+    api.get('rockets/dates').then(({ data }: { data: { dates: string[] } }) => {
+      const items = data.dates.map((it) => {
+        const date = transformDate(it)
+
+        return { label: date, value: date }
+      })
+
+      setDateList(items)
+    })
+  }, [])
+
+  useEffect(() => {
+    const urlDate = untransformDate(travelDate)
+
+    api
+      .get(`rockets/times/?date=${urlDate}`)
+      .then(
+        ({
+          data,
+        }: {
+          data: { times: { launch: string; company: number }[] }
+        }) => {
+          const times = data.times.map((it) => ({
+            label: it.launch,
+            value: it.launch,
+            company: it.company,
+          }))
+
+          setTimeList(times)
+        },
+      )
+  }, [travelDate])
+
+  useEffect(() => {
+    const urlDate = untransformDate(travelDate)
+
+    api.get(`rockets/?date=${urlDate}&time=${travelTime}`).then(({ data }) => {
+      Alert.alert(JSON.stringify(data))
+    })
+  }, [travelTime])
+
+  const transformDate = (date: string) => {
+    const [year, month, day] = date.split('-')
+
+    return `${day}/${month}/${year}`
+  }
+
+  const untransformDate = (date: string) => {
+    const [day, month, year] = date.split('/')
+
+    return `${year}/${month}/${day}`
+  }
 
   const handleLogout = () => {
     navigation.goBack()
@@ -17,6 +101,14 @@ const Home = () => {
 
   const handleSelectRocket = () => {
     navigation.navigate('Rockets')
+  }
+
+  const handleSelectDate = (date: string) => {
+    setTravelDate(date)
+  }
+
+  const handleSelectTime = (time: string) => {
+    setTravelTime(time)
   }
 
   return (
@@ -53,13 +145,16 @@ const Home = () => {
           <Text style={styles.infosText}>t - 0: Launch!</Text>
         </View>
 
-        <TextInput
-          style={[global.input, { marginBottom: 30 }]}
-          placeholder="Flight date"
+        <Select
+          placeholder="Select a date"
+          items={dateList}
+          onSelect={handleSelectDate}
         />
-        <TextInput
-          style={[global.input, { marginBottom: 30 }]}
-          placeholder="Flight time"
+
+        <Select
+          placeholder="Select a time"
+          items={timeList}
+          onSelect={handleSelectTime}
         />
 
         <ScrollView
