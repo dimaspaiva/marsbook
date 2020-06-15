@@ -54,16 +54,36 @@ class Rocket {
 
     if (time) {
       const rockets = await knex('rockets')
-        .select('id', 'model', 'seats', 'price', 'launch', 'company')
+        .select(
+          'rockets.id',
+          'rockets.model',
+          'rockets.seats',
+          'rockets.price',
+          'rockets.launch',
+          'rockets.company',
+          'companies.name',
+          'companies.rating'
+        )
         .where('launch', '=', `${date} ${time}`)
+        .join('companies', 'companies.id', '=', 'rockets.company')
 
       return res.json({ rockets })
     }
 
     if (date) {
       const rockets = await knex('rockets')
-        .select('id', 'model', 'seats', 'price', 'launch', 'company')
+        .select(
+          'rockets.id',
+          'rockets.model',
+          'rockets.seats',
+          'rockets.price',
+          'rockets.launch',
+          'rockets.company',
+          'companies.name',
+          'companies.rating'
+        )
         .whereBetween('launch', [`${date} 00:00:00`, `${date} 23:59:59`])
+        .join('companies', 'companies.id', '=', 'rockets.company')
 
       return res.json({ rockets })
     }
