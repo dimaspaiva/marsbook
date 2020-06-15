@@ -52,10 +52,19 @@ interface Rocket {
   rating: number
 }
 
+const defaultCompany = {
+  id: -1,
+  name: '',
+  rating: -1,
+  selected: false,
+}
+
 const Home = () => {
   const navigation = useNavigation()
+  const [canSelectRocket, setCanSelectRocket] = useState(false)
   const [travelDate, setTravelDate] = useState('')
   const [travelTime, setTravelTime] = useState('')
+  const [travelCompany, setTravelCompany] = useState<Company>(defaultCompany)
   const [timeList, setTimeList] = useState<Select[]>([])
   const [dateList, setDateList] = useState<Select[]>([])
   const [companiesList, setCompaniesList] = useState<Company[]>([])
@@ -90,6 +99,7 @@ const Home = () => {
 
   useEffect(() => {
     const urlDate = untransformDate(travelDate)
+    setCanSelectRocket(false)
 
     if (travelTime !== '' && travelDate !== '') {
       api
@@ -137,7 +147,11 @@ const Home = () => {
   }
 
   const handleSelectRocket = () => {
-    navigation.navigate('Rockets')
+    const rockets = rocketsList.filter(
+      (rocket) => rocket.company === travelCompany.id,
+    )
+
+    navigation.navigate('Rockets', { rockets })
   }
 
   const handleSelectDate = (date: string) => {
@@ -145,16 +159,25 @@ const Home = () => {
     setTravelTime('')
     setTimeList([])
     setCompaniesList([])
+    setTravelCompany({})
+    setCanSelectRocket(false)
   }
 
   const handleSelectTime = (time: string) => {
     setTravelTime(time)
+    setTravelCompany(defaultCompany)
   }
 
   const handleSelectCompany = (id: number) => {
     const newSelectedCompanie = companiesList.map((company) => {
       if (company.id === id && !company.selected) {
+        setTravelCompany(company)
+        setCanSelectRocket(true)
         return { ...company, selected: true }
+      }
+
+      if (company.selected) {
+        setCanSelectRocket(false)
       }
 
       return { ...company, selected: false }
@@ -232,6 +255,7 @@ const Home = () => {
       </View>
 
       <MainButton
+        active={canSelectRocket}
         color="#9966FF"
         darkColor="#7C48E4"
         text="Select your Rocket!"
