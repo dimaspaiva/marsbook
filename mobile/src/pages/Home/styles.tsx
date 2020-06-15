@@ -21,9 +21,11 @@ const styles = StyleSheet.create({
 
   companiesList: {
     marginBottom: 40,
+    height: 100,
   },
 
   companieContainer: {
+    paddingTop: 6,
     width: 75,
     height: 99,
     justifyContent: 'space-between',
@@ -38,10 +40,16 @@ const styles = StyleSheet.create({
   },
 
   companieName: {
-    fontFamily: 'Evogria',
     fontSize: 15,
     color: '#EAEAEA',
+    fontFamily: 'Evogria',
     textAlign: 'center',
+  },
+
+  companieSelected: {
+    borderRadius: 4,
+    borderWidth: 1.2,
+    borderColor: '#9966FF',
   },
 })
 

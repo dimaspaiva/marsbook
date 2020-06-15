@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native'
@@ -18,16 +19,47 @@ import styles from './styles'
 import global from '../styles-global'
 import api from '../../services/api'
 
+interface Select {
+  label: string
+  value: string
+}
+
+interface Company {
+  id: number
+  name: string
+  rating: number
+  selected: boolean
+}
+
+interface ReceivedRocketsData {
+  id: number
+  model: string
+  seats: number
+  price: number
+  launch: string
+  company: number
+  name: string
+  rating: number
+}
+
+interface Rocket {
+  id: number
+  model: string
+  seats: number
+  price: number
+  launch: string
+  company: number
+  rating: number
+}
+
 const Home = () => {
   const navigation = useNavigation()
   const [travelDate, setTravelDate] = useState('')
   const [travelTime, setTravelTime] = useState('')
-  const [timeList, setTimeList] = useState<{ label: string; value: string }[]>(
-    [],
-  )
-  const [dateList, setDateList] = useState<{ label: string; value: string }[]>(
-    [],
-  )
+  const [timeList, setTimeList] = useState<Select[]>([])
+  const [dateList, setDateList] = useState<Select[]>([])
+  const [companiesList, setCompaniesList] = useState<Company[]>([])
+  const [rocketsList, setRocketsList] = useState<Rocket[]>([])
 
   useEffect(() => {
     api.get('rockets/dates').then(({ data }: { data: { dates: string[] } }) => {
@@ -62,8 +94,28 @@ const Home = () => {
     if (travelTime !== '' && travelDate !== '') {
       api
         .get(`rockets/?date=${urlDate}&time=${travelTime}`)
-        .then(({ data }) => {
-          Alert.alert(JSON.stringify(data))
+        .then(({ data }: { data: { rockets: ReceivedRocketsData[] } }) => {
+          const companies = data.rockets.map((it) => ({
+            id: it.company,
+            name: it.name,
+            rating: it.rating,
+            flight: it.id,
+            selected: false,
+          }))
+
+          setCompaniesList(companies)
+
+          const rockets = data.rockets.map((it) => ({
+            id: it.id,
+            model: it.model,
+            seats: it.seats,
+            price: it.price,
+            launch: it.launch,
+            company: it.company,
+            rating: it.rating,
+          }))
+
+          setRocketsList(rockets)
         })
     }
   }, [travelTime])
@@ -91,10 +143,24 @@ const Home = () => {
   const handleSelectDate = (date: string) => {
     setTravelDate(date)
     setTravelTime('')
+    setTimeList([])
+    setCompaniesList([])
   }
 
   const handleSelectTime = (time: string) => {
     setTravelTime(time)
+  }
+
+  const handleSelectCompany = (id: number) => {
+    const newSelectedCompanie = companiesList.map((company) => {
+      if (company.id === id && !company.selected) {
+        return { ...company, selected: true }
+      }
+
+      return { ...company, selected: false }
+    })
+
+    setCompaniesList(newSelectedCompanie)
   }
 
   return (
@@ -149,26 +215,19 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ padding: 0 }}>
-          <View style={styles.companieContainer}>
-            <View style={styles.companieLogo} />
-            <Text style={styles.companieName}>Company name</Text>
-          </View>
-          <View style={styles.companieContainer}>
-            <View style={styles.companieLogo} />
-            <Text style={styles.companieName}>Company name</Text>
-          </View>
-          <View style={styles.companieContainer}>
-            <View style={styles.companieLogo} />
-            <Text style={styles.companieName}>Company name</Text>
-          </View>
-          <View style={styles.companieContainer}>
-            <View style={styles.companieLogo} />
-            <Text style={styles.companieName}>Company name</Text>
-          </View>
-          <View style={styles.companieContainer}>
-            <View style={styles.companieLogo} />
-            <Text style={styles.companieName}>Company name</Text>
-          </View>
+          {companiesList.map((company) => (
+            <TouchableWithoutFeedback
+              onPress={() => handleSelectCompany(company.id)}>
+              <View
+                style={[
+                  styles.companieContainer,
+                  company.selected && styles.companieSelected,
+                ]}>
+                <View style={styles.companieLogo} />
+                <Text style={styles.companieName}>{company.name}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          ))}
         </ScrollView>
       </View>
 
