@@ -240,6 +240,7 @@ const Home = () => {
           contentContainerStyle={{ padding: 0 }}>
           {companiesList.map((company) => (
             <TouchableWithoutFeedback
+              key={company.id}
               onPress={() => handleSelectCompany(company.id)}>
               <View
                 style={[

@@ -21,10 +21,17 @@ const styles = StyleSheet.create({
   },
 
   rocketContainer: {
-    height: 90,
+    minHeight: 120,
+    paddingHorizontal: 9,
     marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+
+  selectedRocket: {
+    borderWidth: 3,
+    borderColor: '#9966FF',
+    borderRadius: 4,
   },
 
   rocketLogo: {
@@ -36,21 +43,21 @@ const styles = StyleSheet.create({
   },
 
   rocketHeader: {
-    width: 220,
+    width: 180,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
 
   rocketName: {
-    width: 160,
+    width: 130,
     fontSize: 18,
     fontFamily: 'Evogria',
     color: '#9966FF',
   },
 
   rocketTicketContainer: {
-    width: 60,
+    width: 50,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -63,13 +70,14 @@ const styles = StyleSheet.create({
   },
 
   rocketInfo: {
+    width: 180,
     fontSize: 15,
     fontFamily: 'Evogria',
     color: '#949494',
   },
 
   rocketFooter: {
-    width: 210,
+    width: 180,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   Text,
   SafeAreaView,
@@ -13,12 +13,14 @@ import {
 import { useNavigation } from '@react-navigation/native'
 
 import MainButton from '../../components/MainButton'
-import api from '../../services/api'
+import LoginContext from '../../contexts/loginContex'
 
 import styles from './styles'
 import global from '../styles-global'
 
 const Login = () => {
+  const { sigIn } = useContext(LoginContext)
+
   const navigation = useNavigation()
 
   const [isKeyboard, setIsKeyboard] = useState(false)
@@ -39,17 +41,11 @@ const Login = () => {
 
   const handleLogin = async () => {
     const { email, password } = login
-
     try {
-      const response = await api.post('users/login', {
-        email,
-        password,
-      })
+      await sigIn({ email, password })
 
-      if (response.status === 200) {
-        setLogin({ email: '', password: '' })
-        return navigation.navigate('Home')
-      }
+      setLogin({ email: '', password: '' })
+      return navigation.navigate('Home')
     } catch (error) {
       setLogin({ email: login.email, password: '' })
       Alert.alert('Login failed', 'Wrong login infos, email or password')
