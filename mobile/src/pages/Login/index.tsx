@@ -14,14 +14,17 @@ import { useNavigation } from '@react-navigation/native'
 
 import MainButton from '../../components/MainButton'
 import LoginContext from '../../contexts/loginContex'
+import api from '../../services/api'
 
 import styles from './styles'
 import global from '../styles-global'
 
 const Login = () => {
-  const { sigIn } = useContext(LoginContext)
-
+  const {
+    user: { flight },
+  } = useContext(LoginContext)
   const navigation = useNavigation()
+  const { sigIn } = useContext(LoginContext)
 
   const [isKeyboard, setIsKeyboard] = useState(false)
   const [login, setLogin] = useState({ email: '', password: '' })
@@ -42,14 +45,27 @@ const Login = () => {
   const handleLogin = async () => {
     const { email, password } = login
     try {
-      await sigIn({ email, password })
-
+      const response = await api.post('users/login', {
+        email,
+        password,
+      })
       setLogin({ email: '', password: '' })
-      return navigation.navigate('Home')
+      sigIn(response.data.user)
+
+      if (response.data.user.flight) {
+        return navigation.navigate('AwaitFlight')
+      }
+
+      navigation.navigate('Home')
     } catch (error) {
       setLogin({ email: login.email, password: '' })
-      Alert.alert('Login failed', 'Wrong login infos, email or password')
+      return Alert.alert('Login failed', 'Wrong login infos, email or password')
     }
+
+    if (!flight) {
+      return navigation.navigate('Home')
+    }
+    return navigation.navigate('AwaitFlight')
   }
 
   const handleEmail = (email: string) => {

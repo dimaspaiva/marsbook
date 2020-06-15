@@ -1,10 +1,10 @@
 import React, { createContext, useState } from 'react'
-import api from '../services/api'
 import { Alert } from 'react-native'
 
 interface LoginContextData {
   user: User
   sigIn({ email, password }: { email: string; password: string }): Promise<any>
+  reset(): Promise<void>
 }
 
 interface User {
@@ -12,6 +12,12 @@ interface User {
   name: string
   balance: number
   role?: number
+  flight?: object
+}
+
+interface SigInParams {
+  email: string
+  password: string
 }
 
 const LoginContext = createContext<LoginContextData>({} as LoginContextData)
@@ -19,36 +25,21 @@ const LoginContext = createContext<LoginContextData>({} as LoginContextData)
 export const LoginProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>({} as User)
 
-  async function sigIn({
-    email,
-    password,
-  }: {
-    email: string
-    password: string
-  }) {
-    const response = await api.post('users/login', {
-      email,
-      password,
-    })
-
-    if (!response.data) {
-      return response
-    }
-
-    const user = response.data.user as User
+  function sigIn(user: User) {
     setUser(user)
+    Alert.alert('info', JSON.stringify(user))
+  }
+
+  async function reset() {
+    setUser({} as User)
   }
 
   return (
     <LoginContext.Provider
       value={{
-        user: {
-          id: user.id || -1,
-          name: user.name || '',
-          balance: user.balance || 0,
-          role: user.role || 1,
-        },
+        user,
         sigIn,
+        reset,
       }}>
       {children}
     </LoginContext.Provider>

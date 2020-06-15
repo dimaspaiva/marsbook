@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   ScrollView,
   View,
@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import MainButton from '../../components/MainButton'
 import Select from '../../components/Select'
+import LoginContext from '../../contexts/loginContex'
 
 import styles from './styles'
 import global from '../styles-global'
@@ -60,6 +61,7 @@ const defaultCompany = {
 }
 
 const Home = () => {
+  const { reset } = useContext(LoginContext)
   const navigation = useNavigation()
   const [canSelectRocket, setCanSelectRocket] = useState(false)
   const [travelDate, setTravelDate] = useState('')
@@ -143,6 +145,7 @@ const Home = () => {
   }
 
   const handleLogout = () => {
+    reset()
     navigation.goBack()
   }
 

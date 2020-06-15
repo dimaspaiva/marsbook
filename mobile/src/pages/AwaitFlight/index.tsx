@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Feather'
 
+import MainButton from '../../components/MainButton'
+import LoginContext from '../../contexts/loginContex'
+
 import styles from './style'
 import global from '../styles-global'
-import MainButton from '../../components/MainButton'
 
 const AwaitFlight = () => {
+  const { reset } = useContext(LoginContext)
   const navigation = useNavigation()
 
   const handleLogout = () => {
+    reset()
     navigation.navigate('Login')
   }
 
