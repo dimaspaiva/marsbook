@@ -18,25 +18,13 @@ import styles from './styles'
 import global from '../styles-global'
 import api from '../../services/api'
 
-interface Times {
-  times: {
-    launch: string
-    company: number
-  }
-}
-
 const Home = () => {
   const navigation = useNavigation()
   const [travelDate, setTravelDate] = useState('')
   const [travelTime, setTravelTime] = useState('')
-
-  const [timeList, setTimeList] = useState<
-    {
-      label: string
-      value: string
-      company: number
-    }[]
-  >([])
+  const [timeList, setTimeList] = useState<{ label: string; value: string }[]>(
+    [],
+  )
   const [dateList, setDateList] = useState<{ label: string; value: string }[]>(
     [],
   )
@@ -58,29 +46,26 @@ const Home = () => {
 
     api
       .get(`rockets/times/?date=${urlDate}`)
-      .then(
-        ({
-          data,
-        }: {
-          data: { times: { launch: string; company: number }[] }
-        }) => {
-          const times = data.times.map((it) => ({
-            label: it.launch,
-            value: it.launch,
-            company: it.company,
-          }))
+      .then(({ data }: { data: { times: string[] } }) => {
+        const times = data.times.map((it) => ({
+          label: it,
+          value: it,
+        }))
 
-          setTimeList(times)
-        },
-      )
+        setTimeList(times)
+      })
   }, [travelDate])
 
   useEffect(() => {
     const urlDate = untransformDate(travelDate)
 
-    api.get(`rockets/?date=${urlDate}&time=${travelTime}`).then(({ data }) => {
-      Alert.alert(JSON.stringify(data))
-    })
+    if (travelTime !== '' && travelDate !== '') {
+      api
+        .get(`rockets/?date=${urlDate}&time=${travelTime}`)
+        .then(({ data }) => {
+          Alert.alert(JSON.stringify(data))
+        })
+    }
   }, [travelTime])
 
   const transformDate = (date: string) => {
@@ -105,6 +90,7 @@ const Home = () => {
 
   const handleSelectDate = (date: string) => {
     setTravelDate(date)
+    setTravelTime('')
   }
 
   const handleSelectTime = (time: string) => {
@@ -152,6 +138,7 @@ const Home = () => {
         />
 
         <Select
+          value={travelTime}
           placeholder="Select a time"
           items={timeList}
           onSelect={handleSelectTime}
