@@ -68,6 +68,10 @@ const Login = () => {
     return navigation.navigate('AwaitFlight')
   }
 
+  const handleRegister = () => {
+    navigation.navigate('Register')
+  }
+
   const handleEmail = (email: string) => {
     setLogin({ email, password: login.password })
   }
@@ -117,7 +121,7 @@ const Login = () => {
             <TouchableOpacity>
               <Text style={global.link}>Forgot your password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => handleRegister()}>
               <Text style={global.link}>Register</Text>
             </TouchableOpacity>
           </View>
