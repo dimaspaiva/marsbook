@@ -1,10 +1,9 @@
 import React, { createContext, useState } from 'react'
-import { Alert } from 'react-native'
 
 interface LoginContextData {
   user: User
-  sigIn(user: User): Function
-  reset(): Function
+  sigIn(user: User): void
+  reset(): void
 }
 
 interface User {
@@ -15,11 +14,6 @@ interface User {
   flight?: object
 }
 
-interface SigInParams {
-  email: string
-  password: string
-}
-
 const LoginContext = createContext<LoginContextData>({} as LoginContextData)
 
 export const LoginProvider: React.FC = ({ children }) => {
@@ -27,7 +21,6 @@ export const LoginProvider: React.FC = ({ children }) => {
 
   function sigIn(user: User) {
     setUser(user)
-    Alert.alert('info', JSON.stringify(user))
   }
 
   function reset() {
