@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://192.168.100.65:4040/',
+  baseURL: 'https://marsbook.herokuapp.com/',
 })
