@@ -1,5 +1,12 @@
 import React, { useContext } from 'react'
-import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Feather'
 
@@ -16,6 +23,10 @@ const AwaitFlight = () => {
   const handleLogout = () => {
     reset()
     navigation.navigate('Login')
+  }
+
+  const handleCancelFlight = () => {
+    Alert.alert('Oops...', 'Try it later, not implemmented')
   }
 
   return (
@@ -61,7 +72,7 @@ const AwaitFlight = () => {
         darkColor="#AC3B3B"
         text="Eject, cancel travel"
         icon="minus-circle"
-        action={() => {}}
+        action={handleCancelFlight}
       />
     </SafeAreaView>
   )
