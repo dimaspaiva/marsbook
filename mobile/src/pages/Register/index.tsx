@@ -53,7 +53,7 @@ const Register = () => {
         password: user.password,
       })
 
-      Alert.alert('Success!', 'User created, login now!')
+      Alert.alert('Success!', 'User created, make login now!')
       navigation.navigate('Login')
     } catch (error) {
       Alert.alert('Failed', 'Cant create your user, maybe it already exists')
