@@ -17,6 +17,10 @@ if (process.env.NODE_ENV === 'dev') {
   })
 }
 
+routes.get('/', (req, res) => {
+  return res.json({ message: 'Mars Book App!' })
+})
+
 routes.post('/users', User.create)
 routes.post('/users/login', User.login)
 

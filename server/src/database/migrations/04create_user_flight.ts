@@ -20,7 +20,7 @@ export async function up(knex: Knex) {
           : knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       )
 
-    table.timestamp('deleted_at')
+    table.dateTime('deleted_at')
   })
 }
 

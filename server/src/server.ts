@@ -1,5 +1,7 @@
 import app from './app'
 
-app.listen(4040, () => {
-  console.log('[SRV] up...')
+const PORT = process.env.PORT || 4040
+
+app.listen(PORT, () => {
+  console.log('[SRV] up...', PORT)
 })

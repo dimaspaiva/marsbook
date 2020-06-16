@@ -4,6 +4,7 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
+    "start": "ts-node .",
     "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules .",
     "migrate": "knex --knexfile knexfile.ts migrate:latest",
     "seeds": "knex --knexfile knexfile.ts seed:run",

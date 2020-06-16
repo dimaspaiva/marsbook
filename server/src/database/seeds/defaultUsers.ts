@@ -18,7 +18,7 @@ export async function seed(knex: Knex) {
       id: 3,
       email: 'romarinho@gmail.com',
       password: '345678',
-      name: 'Romário Jr.',
+      name: 'Romario Jr.',
     },
     {
       id: 4,
