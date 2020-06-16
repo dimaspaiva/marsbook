@@ -85,10 +85,10 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    const urlDate = untransformDate(travelDate)
-
+    const urlTravelDate = untransformDate(travelDate)
+    Alert.alert(urlTravelDate)
     api
-      .get(`rockets/times/?date=${urlDate}`)
+      .get(`rockets/times/?date=${urlTravelDate}`)
       .then(({ data }: { data: { times: string[] } }) => {
         const times = data.times.map((it) => ({
           label: it,
@@ -100,12 +100,12 @@ const Home = () => {
   }, [travelDate])
 
   useEffect(() => {
-    const urlDate = untransformDate(travelDate)
     setCanSelectRocket(false)
+    const urlTravelDate = untransformDate(travelDate)
 
     if (travelTime !== '' && travelDate !== '') {
       api
-        .get(`rockets/?date=${urlDate}&time=${travelTime}`)
+        .get(`rockets/?date=${urlTravelDate}&time=${travelTime}`)
         .then(({ data }: { data: { rockets: ReceivedRocketsData[] } }) => {
           const companies = data.rockets.map((it) => ({
             id: it.company,
@@ -133,7 +133,7 @@ const Home = () => {
   }, [travelTime])
 
   const transformDate = (date: string) => {
-    const [year, month, day] = date.split('-')
+    const [month, day, year] = date.split(/-|\//i)
 
     return `${day}/${month}/${year}`
   }
